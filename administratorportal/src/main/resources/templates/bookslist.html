@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+  <head th:replace="common/header :: common-header">
+     <meta name="_csrf" content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+  </head>
+
+  <body>
+
+<div th:replace="common/header :: navbar"></div>
+	<div class="container">
+		<div class="table-responsive">
+			<table id="bookListTable" class="table table-bordered table-hover table-striped">
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th>Author</th>
+						<th>List Price</th>
+						<th>Our Price</th>
+						<th>Active?</th>
+						<th>Operation</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr data-th-each="books : ${booksList}">
+						<!-- <td><input hidden="hidden" name="id" th:value="${books.id}" /></td> -->
+						<td><a th:href="@{/books/bookinfo(id=${books.id})}"><span th:text="${books.title}"></span></a></td>
+						<td th:text="${books.author}"></td>
+						<td th:text="${books.listPrice}"></td>
+						<td th:text="${books.ourPrice}"></td>
+						<td th:text="${books.active}"></td>
+						<td>delete</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	
+	</div>
+
+
+<div th:replace="common/header :: body-bottom-scripts"></div>
+  </body>
+</html>

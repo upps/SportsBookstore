@@ -1,0 +1,175 @@
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" />
+ <meta name="_csrf" content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="container">
+		<div class="row">
+			<form class="form-horizontal" th:action="@{/books/add}" method="post"
+				enctype="multipart/form-data">
+				<fieldset>
+					<legend class="center-block">
+						New Book Information<span style="font-size: small"> * is a
+							required field</span>
+					</legend>
+
+
+					<!-- title -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="title">* Title</label>
+
+						<div class="col-md-8">
+							<input type="text" name="title" class="form-control" id="title"
+								th:value="${books.title}" required="required" placeholder="Title" />
+							<span class="help-block">Title</span>
+						</div>
+					</div>
+
+					<!-- author -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="author">*
+							Author</label>
+						<div class="col-md-8">
+							<input type="text" name="author" class="form-control" id="author"
+								th:value="${books.author}" required="required"
+								placeholder="Author" /> <span class="help-block">Author
+								</span>
+						</div>
+					</div>
+
+					<!-- publisher -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="publisher">Publisher</label>
+						<div class="col-md-8">
+							<input type="text" name="publisher" class="form-control"
+								id="publisher" th:value="${books.publisher}" required="required"
+								placeholder="Publisher" /> <span class="help-block">Publisher
+								</span>
+						</div>
+					</div>
+
+					<!-- language -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="language">Language</label>
+						<div class="col-md-8">
+							<select th:value="${books.language}" id="language" name="language"
+								class="form-control">
+								<option value="english">English</option>
+								<option value="spanish">Irish</option>
+							</select>
+						</div>
+					</div>
+
+
+					<!-- isbn -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="isbn">ISBN</label>
+
+						<div class="col-md-8">
+							<input type="text" name="isbn" class="form-control" id="isbn" required="required"
+								th:value="${books.isbn}" placeholder="ISBN" /> <span
+								class="help-block">ISBN</span>
+						</div>
+					</div>
+
+					<!-- shipping weight -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="shippingWeight">Shipping
+							Weight</label>
+						<div class="col-md-8">
+							<div class="input-group">
+								<input th:value="${books.shippingWeight}" type="number"
+									name="shippingWeight" class="form-control" id="shippingWeight" required="required"
+									placeholder="Shipping Weight" /> <span
+									class="input-group-addon">Grams</span>
+							</div>
+							<span class="help-block">Shipping Weight</span>
+						</div>
+					</div>
+
+					<!-- list price -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="listPrice">List
+							Price</label>
+						<div class="col-md-8">
+							<div class="input-group">
+								<span class="input-group-addon">EU</span> <input
+									th:value="${books.listPrice}" type="number" name="listPrice" required="required"
+									class="form-control" id="listPrice" placeholder="List Price" />
+							</div>
+							<span class="help-block">List price</span>
+						</div>
+					</div>
+
+					<!-- our price -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="ourPrice">Our
+							Price</label>
+						<div class="col-md-8">
+							<div class="input-group">EU
+								<span class="input-group-addon"></span> <input
+									th:value="${books.ourPrice}" type="number" name="ourPrice" required="required"
+									class="form-control" id="ourPrice" placeholder="Our Price" />
+							</div>
+							<span class="help-block">Our price</span>
+						</div>
+					</div>
+
+					<!-- in stock number -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="inStockNumber">Number
+							in stock</label>
+						<div class="col-md-8">
+							<input th:value="${books.inStockNumber}" type="number" required="required"
+								name="inStockNumber" class="form-control" id="inStockNumber"
+								placeholder="Number of in-stock copies" /> <span
+								class="help-block">Number of in-stock copies</span>
+						</div>
+					</div>
+
+					<!-- status of book -->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="status">Status</label>
+						<div class="col-md-8">
+							<label><input value="true" type="radio" name="active" required="required"
+								checked="checked" /> Active </label> <label><input
+								value="false" type="radio" name="active" />
+								Inactive </label> <span class="help-block">Whether the book is
+								active or inactive</span>
+						</div>
+					</div>
+
+					<!-- upload image -->
+					<div class="form-group">
+						<div class="col-md-2">
+							<label for="bookImage">Upload book image</label>
+						</div>
+						<div class="col-md-8">
+							<input id="bookImage" type="file" name="bookImage"
+								th:value="${books.bookImage}" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-2"></div>
+						<div class="col-md-8">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+							<button type="submit" class="btn btn-success">Add Book</button>
+							<a class="btn btn-danger" th:href="@{/}">Cancel</a>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+
+
+	<div th:replace="common/header :: body-bottom-scripts" />
+</body>
+</html>
