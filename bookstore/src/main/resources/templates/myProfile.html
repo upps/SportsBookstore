@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+  <head th:replace="common/header :: common-header">
+        <meta name="_csrf" content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+  </head>
+
+  <body>
+
+<div th:replace="common/header :: navbar"></div>
+
+	<div class="container">
+		<div class="row" style="margin-bottom: -100px;">
+			<div class="col-xs-8">
+				<h2 class="section-headline"><span  th:text="${#strings.toUpperCase(user.username)}">WELCOME</span></h2>
+			</div>
+			<div class="col-xs-4">
+				<img src="/image/logo.png" class="img-responsive" />
+			</div>
+			<div class="row" style="margin-top: 120px;">
+			<div class="col-xs-9 col-xs-offset-3">
+				
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs">
+					<li th:classappend="${classActiveEdit}? 'active'"><a
+						href="#tab-1" data-toggle="tab"><span style="color: red;">Edit</span></a></li>
+					<li th:classappend="${classActiveOrders}? 'active'"><a
+						href="#tab-2" data-toggle="tab"><span style="color: red;">Orders</span></a></li>
+					<li th:classappend="${classActiveBilling}? 'active'"><a
+						href="#tab-3" data-toggle="tab"><span style="color: red;">Billing</span></a></li>
+					<li th:classappend="${classActiveShipping}? 'active'"><a
+						href="#tab-4" data-toggle="tab"><span style="color: red;">Shipping</span></a></li>
+				</ul>
+
+				<!-- Tab panels -->
+				<div class="tab-content">
+
+					<!-- Edit user information -->
+					<div class="tab-pane fade" id="tab-1"
+						th:classappend="${classActiveEdit}? 'in active'">
+						<div class="panel-group">
+							<div class="panel panel-default" style="border: none;">
+								<div class="panel-body"
+									style="background-color: #ededed; margin-top: 20px;">
+
+									<div class="alert alert-danger" th:if="${incorrectPassword}">
+										<strong>Incorrect Password!</strong> Pleae enter the correct
+										password for the current user.
+									</div>
+
+									<div class="alert alert-succss" th:if="${updateSuccess}">
+										<strong>Update Success!</strong>
+									</div>
+
+									<form th:action="@{/updateUserInfo}" method="post">
+										<input type="hidden" name="id" th:value="${user.id}" />
+
+										<div class="bg-info" th:if="${updateUserInfo}">User info
+											updated.</div>
+
+										<div class="form-group">
+											<div class="row">
+												<div class="col-xs-6">
+													<label for="firstName">First Name</label> <input
+														type="text" class="form-control" id="firstName" required="required"
+														name="firstName" th:value="${user.firstName}" />
+												</div>
+												<div class="col-xs-6">
+													<label for="lastName">Last Name</label> <input type="text"
+														class="form-control" id="lastName" name="lastName" required="required"
+														th:value="${user.lastName}" />
+												</div>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label for="userName">Username</label> ' <input type="text"
+												class="form-control" id="userName" name="username" required="required" pattern="[A-Za-z0-9]+"
+												th:value="${user.username}" />
+										</div>
+										<div class="form-group">
+											<label for="currentPassword">Current Password</label> ' <input
+												type="password" class="form-control" id="currentPassword" required="required"
+												name="password" th:value="${currentPassword}" />
+										</div>
+										<p style="color: #828282">Enter your current password to
+											change the email address or password.</p>
+
+										<div class="form-group">
+											<label for="email">* Email Address</label> ' <input
+												type="text" class="form-control" id="email" name="email" required="required"
+												th:value="${user.email}" />
+										</div>
+										<p style="color: #828282">A valid email address. All
+											emails from the system withll be sent to this address. The
+											email address is not made public and will only be used if you
+											wish to receive a new password or wish to receive certain
+											notification.</p>
+
+										<div class="form-group">
+											<label for="txtNewPassword">Password</label>&nbsp;<span
+												id="checkPasswordMatch" style="color: red;"></span> <input
+												type="password" class="form-control" id="txtNewPassword" required="required" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{10,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 10 or more characters"
+												name="newPassword" />
+										</div>
+
+										<div class="form-group">
+											<label for="txtConfirmPassword">Confirm Password</label> ' <input
+												type="password" class="form-control" id="txtConfirmPassword" required="required" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{10,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 10 or more characters" />
+										</div>
+										<p style="color: #828282">To change the current user
+											password, enter the new password in both fields.</p>
+										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+										<button id="updateUserInfoButton" type="submit"
+											class="btn btn-primary">Save All</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
+			</div>
+		</div>
+	</div>
+			
+		</div>
+</div>
+
+ <div th:replace="common/header :: body-bottom-scripts"></div>
+</body>
+</html>
